@@ -4,15 +4,13 @@ const readLine = require("readline").createInterface({
   output: process.stdout,
 });
 
-fs.readFile("todos.json", function (error, data) {
-  let todos = JSON.parse(data);
+let todos = JSON.parse(fs.readFileSync("todos.json"));
+// console.log(todos);
 
-  readLine.question("您要新增什麼待辦事項？\n", function (answer) {
-    todos.push({title: answer});
+readLine.question("您要新增什麼待辦事項？\n", function (answer) {
+  todos.push({title: answer});
 
-    fs.writeFile("todos.json", JSON.stringify(todos), function (err) {
-      console.log("新增事項:" + answer);
-      process.exit(0);
-    });
-  });
+  fs.writeFileSync("todos.json", JSON.stringify(todos));
+  console.log("新增事項:" + answer);
+  process.exit(0);
 });
